@@ -1,5 +1,6 @@
 import requests
 from django.core.management.base import BaseCommand
+from countries.models import Country
 
 class Command(BaseCommand):
     help = 'Fetches country data from the REST Countries API'
@@ -9,4 +10,4 @@ class Command(BaseCommand):
         response = requests.get(api_url)
         countries_data = response.json()
 
-        print(countries_data[:1])
+           
