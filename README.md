@@ -95,9 +95,23 @@ Access the application at: [http://localhost:8000](http://localhost:8000)
 
 ## 📸 Screenshots
 
-### 🏠 Homepage
-![Homepage]
+### 🏠 Homepage (index.html)
+<img src="Screenshots/homepage.png" alt="Homepage" width="600"/>
 
-### 🌍 Country Detail View
-![Country Detail]()
+### 🌍 Country Details Page (country_details.html)
+<img src="Screenshots/country_details.png" alt="Country Details" width="600"/>
+
+### ➕ Add Country Page (Add_country.html)
+<img src="Screenshots/Add_country.png" alt="Add Country" width="600"/>
+
+### ✏️ Update Country Page (Udpate_country.html)
+<img src="Screenshots/update_country.png" alt="Update Country" width="600"/>
+
+### 🔐 Login Page (login.html)
+<img src="Screenshots/login.png" alt="Login"/>
+
+### 📝 Register Page (register.html)
+<img src="Screenshots/register.png" alt="Register"/>
+
+
 
