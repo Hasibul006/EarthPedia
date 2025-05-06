@@ -16,6 +16,36 @@ def Delete_country(request, name):
         country.delete()
         return redirect('/')
 
+def Update_country(request, name):
+        country = Country.objects.get(name_common=name)
+        
+        if request.method == 'POST':
+            country.name_common=request.POST.get('name_common')
+            country.name_official=request.POST.get('name_official')
+            country.native_name=request.POST.get('native_name', '')
+            country.capital=request.POST.get('capital', None)
+            country.region=request.POST.get('region')
+            country.subregion=request.POST.get('subregion', None)
+            country.population = int(request.POST.get('population'))
+            country.area=float(request.POST.get('area'))
+            country.flag_url=request.POST.get('flag_url', None)
+            country.coat_of_arms_url=request.POST.get('coat_of_arms_url', None)
+            country.cca2=request.POST.get('cca2')
+            country.cca3=request.POST.get('cca3')
+            country.cioc=request.POST.get('cioc', None)
+            country.fifa=request.POST.get('fifa', None)
+            country.timezones=request.POST.get('timezones')
+            country.independent=request.POST.get('independent') == 'on'
+            country.un_member=request.POST.get('un_member') == 'on'
+            country.start_of_week=request.POST.get('start_of_week', None)
+            country.landlocked=request.POST.get('landlocked') == 'on'
+            country.tld=request.POST.get('tld', None)
+            country.alt_spellings=request.POST.get('alt_spellings', None)
+            country.borders=request.POST.get('borders', None)
+            country.save()
+            return redirect('/')
+        return render(request, 'Update_country.html', {'country': country})
+
 def Add_country(request):
     if request.method == 'POST':
         name_common=request.POST.get('name_common'),
@@ -72,5 +102,5 @@ def Add_country(request):
         country.save()
         return redirect('/')
     return render(request, 'Add_country.html')
-    
+
     

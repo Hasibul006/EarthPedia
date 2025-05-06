@@ -24,5 +24,3 @@ class Country(models.Model):
     alt_spellings = models.TextField(blank=True, null=True)  
     borders = models.TextField(blank=True, null=True)  
     
-    def __str__(self):
-        return self.name_common
