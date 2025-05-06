@@ -11,6 +11,11 @@ def country_details(request, name):
     country = Country.objects.get(name_common=name)
     return render(request, 'country_details.html', {'country': country})
 
+def Delete_country(request, name):
+        country = Country.objects.get(name_common=name)
+        country.delete()
+        return redirect('/')
+
 def Add_country(request):
     if request.method == 'POST':
         name_common=request.POST.get('name_common'),
@@ -66,6 +71,6 @@ def Add_country(request):
             )
         country.save()
         return redirect('/')
-
     return render(request, 'Add_country.html')
+    
     
