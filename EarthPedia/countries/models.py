@@ -23,4 +23,5 @@ class Country(models.Model):
     tld = models.CharField(max_length=100, blank=True, null=True)
     alt_spellings = models.TextField(blank=True, null=True)  
     borders = models.TextField(blank=True, null=True)  
+    languages = models.TextField(blank=True, null=True)  
     

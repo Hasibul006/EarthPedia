@@ -37,6 +37,7 @@ class Command(BaseCommand):
                 tld = ', '.join(country_data.get('tld', []))
                 alt_spellings = ', '.join(country_data.get('altSpellings', []))
                 borders = ', '.join(country_data.get('borders', []))
+                languages = ', '.join(country_data.get('languages', {}).values())
 
                 # Saving the data to the Country model
                 if not Country.objects.filter(name_common=country_name_common).exists():
@@ -62,7 +63,8 @@ class Command(BaseCommand):
                         coat_of_arms_url=coat_of_arms_url,
                         tld=tld,
                         alt_spellings=alt_spellings,
-                        borders=borders
+                        borders=borders,
+                        languages=languages,
                     )
                 else:
                     self.stdout.write(self.style.WARNING(f'Country {country_name_common} already exists in the database'))

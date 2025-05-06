@@ -22,6 +22,41 @@
             </a>
         </div>
 
+        <form method="get" action="" class="mt-5">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    Filter Countries by Region or Language
+                </div>
+                <div class="card-body">
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-5">
+                            <label for="region" class="form-label">Select Region</label>
+                            <select name="region" id="region" class="form-select">
+                                <option value="">-- Choose a Region --</option>
+                                {% for region in regions %}
+                                    <option value="{{ region }}" {% if region == selected_region %}selected{% endif %}>{{ region }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <label for="language" class="form-label">Select Language</label>
+                            <select name="language" id="language" class="form-select">
+                                <option value="">-- Choose a Language --</option>
+                                {% for language in languages %}
+                                    <option value="{{ language }}" {% if language == selected_language %}selected{% endif %}>{{ language }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <button type="submit" class="btn btn-secondary">Filter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+        
+
         <table class="table table-striped table-bordered">
             <thead class="table-dark">
                 <tr>
