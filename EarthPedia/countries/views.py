@@ -1,9 +1,13 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from countries.models import Country
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 # Create your views here.
 def index(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     # Prepare distinct region and language lists
     regions = Country.objects.exclude(region='').values_list('region', flat=True).distinct()
     language_values = Country.objects.exclude(languages='').values_list('languages', flat=True).distinct()
@@ -46,7 +50,45 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+
+def login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=email, password=password)
+        if user is not None:
+            auth_login(request, user)
+            return redirect('index')
+        else:
+            return redirect('login')
+    return render(request, 'login.html')
+
+def logout(request):
+    auth_logout(request)
+    return redirect('login')
+
+def register(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        if User.objects.filter(email=email).exists():
+            return redirect('register')
+
+        user = User.objects.create_user(username=email, email=email, password=password)
+        user.first_name = name
+        user.save()
+
+        auth_login(request, user)
+        return redirect('index')
+    return render(request, 'register.html')
+
+
 def country_details(request, name):
+    if not request.user.is_authenticated:
+        return redirect('login')
     country = Country.objects.get(name_common=name)
     all_countries = Country.objects.exclude(name_common=name)
     regions = country.region
@@ -54,11 +96,15 @@ def country_details(request, name):
     return render(request, 'country_details.html', {'country': country,'countries_region': countries_region})
 
 def Delete_country(request, name):
+        if not request.user.is_authenticated:
+            return redirect('login')
         country = Country.objects.get(name_common=name)
         country.delete()
         return redirect('/')
 
 def Update_country(request, name):
+        if not request.user.is_authenticated:
+            return redirect('login')
         country = Country.objects.get(name_common=name)
         
         if request.method == 'POST':
@@ -89,6 +135,8 @@ def Update_country(request, name):
         return render(request, 'Update_country.html', {'country': country})
 
 def Add_country(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     if request.method == 'POST':
         name_common=request.POST.get('name_common')
         name_official=request.POST.get('name_official')
