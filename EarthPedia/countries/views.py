@@ -39,7 +39,10 @@ def index(request):
 
 def country_details(request, name):
     country = Country.objects.get(name_common=name)
-    return render(request, 'country_details.html', {'country': country})
+    all_countries = Country.objects.exclude(name_common=name)
+    regions = country.region
+    countries_region = all_countries.filter(region=regions)
+    return render(request, 'country_details.html', {'country': country,'countries_region': countries_region})
 
 def Delete_country(request, name):
         country = Country.objects.get(name_common=name)

@@ -180,9 +180,17 @@
                             <span class="empty-value">No bordering countries (island or territory)</span>
                         {% endif %}
                         </p>
+                        <p>
+                            <strong>Countries with same region:</strong>
+                            {% for country in countries_region %}
+                                <a href="/country_details/{{ country.name_common }}">{{ country.name_common }}</a>{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
                     </div>
+                    
                 </div>
             </div>
+
 
             <!-- Action Buttons -->
             <div class="d-flex justify-content-center mt-4 flex-wrap">
