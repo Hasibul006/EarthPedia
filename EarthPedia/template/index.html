@@ -13,7 +13,11 @@
         <div class="d-flex justify-content-between mb-4">
             <form method="GET" class="flex-grow-1 me-3">
                 <div class="input-group">
-                    <input type="text" name="search" class="form-control" placeholder="Search by country name..." value="{{ request.GET.search }}">
+                    {% if searched_country %}
+                        <input type="text" name="search" class="form-control" placeholder="Search by country name..." value="{{ searched_country }}">
+                    {% else %}
+                        <input type="text" name="search" class="form-control" placeholder="Search by country name..." value="{{request.GET.search}}">
+                    {% endif %}
                     <button class="btn btn-primary" type="submit">Search</button>
                 </div>
             </form>
@@ -48,7 +52,7 @@
                             </select>
                         </div>
                         <div class="col-md-2 text-center">
-                            <button type="submit" class="btn btn-secondary">Filter</button>
+                            <button type="submit" class="btn btn-secondary w-100">Filter</button>
                         </div>
                     </div>
                 </div>

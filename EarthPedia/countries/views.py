@@ -20,13 +20,21 @@ def index(request):
     # Get filter values from GET request
     selected_region = request.GET.get('region')
     selected_language = request.GET.get('language')
+    searched_country = request.GET.get('search')
 
     countries = Country.objects.all()
 
-    if selected_region:
-        countries = countries.filter(region=selected_region)
-    if selected_language:
-        countries = countries.filter(languages__icontains=selected_language)
+    if searched_country:
+        countries = countries.filter(name_common__icontains=searched_country)
+        if selected_region:
+            countries = countries.filter(region=selected_region)
+        if selected_language:
+            countries = countries.filter(languages__icontains=selected_language)
+    else:
+        if selected_region:
+            countries = countries.filter(region=selected_region)
+        if selected_language:
+            countries = countries.filter(languages__icontains=selected_language)
 
     context = {
         'countries': countries,
@@ -34,6 +42,7 @@ def index(request):
         'languages': all_languages,
         'selected_region': selected_region,
         'selected_language': selected_language,
+        'searched_country': searched_country
     }
     return render(request, 'index.html', context)
 
