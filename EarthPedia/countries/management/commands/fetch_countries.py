@@ -28,6 +28,7 @@ class Command(BaseCommand):
                 cca3 = country_data.get('cca3', '')
                 cioc = country_data.get('cioc', '')
                 fifa = country_data.get('fifa', '')
+                coat_of_arms_url = country_data.get('coatOfArms', {}).get('png', '')
                 timezones = ', '.join(country_data.get('timezones', []))
                 independent = country_data.get('independent', False)
                 un_member = country_data.get('unMember', False)
@@ -38,30 +39,34 @@ class Command(BaseCommand):
                 borders = ', '.join(country_data.get('borders', []))
 
                 # Saving the data to the Country model
-                Country.objects.create(
-                    name_common=country_name_common,
-                    name_official=country_name_official,
-                    native_name=native_name,
-                    capital=capital,
-                    region=region,
-                    subregion=subregion,
-                    population=population,
-                    area=area,
-                    flag_url=flag_url,
-                    cca2=cca2,
-                    cca3=cca3,
-                    cioc=cioc,
-                    fifa=fifa,
-                    timezones=timezones,
-                    independent=independent,
-                    un_member=un_member,
-                    start_of_week=start_of_week,
-                    landlocked=landlocked,
-                    tld=tld,
-                    alt_spellings=alt_spellings,
-                    borders=borders
-                )
-
+                if not Country.objects.filter(name_common=country_name_common).exists():
+                    Country.objects.create(
+                        name_common=country_name_common,
+                        name_official=country_name_official,
+                        native_name=native_name,
+                        capital=capital,
+                        region=region,
+                        subregion=subregion,
+                        population=population,
+                        area=area,
+                        flag_url=flag_url,
+                        cca2=cca2,
+                        cca3=cca3,
+                        cioc=cioc,
+                        fifa=fifa,
+                        timezones=timezones,
+                        independent=independent,
+                        un_member=un_member,
+                        start_of_week=start_of_week,
+                        landlocked=landlocked,
+                        coat_of_arms_url=coat_of_arms_url,
+                        tld=tld,
+                        alt_spellings=alt_spellings,
+                        borders=borders
+                    )
+                else:
+                    self.stdout.write(self.style.WARNING(f'Country {country_name_common} already exists in the database'))
+                    continue
             self.stdout.write(self.style.SUCCESS('Successfully fetched and saved country data to the database'))
         else:
             self.stdout.write(self.style.ERROR('Failed to fetch country data'))

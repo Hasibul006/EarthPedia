@@ -1,7 +1,7 @@
 from django.db import models
 
 class Country(models.Model):
-    name_common = models.CharField(max_length=100)
+    name_common = models.CharField(max_length=100, primary_key=True)
     name_official = models.CharField(max_length=255)
     native_name = models.TextField(blank=True, null=True)  
     capital = models.CharField(max_length=100, blank=True, null=True)
